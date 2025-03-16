@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DP Checklist with Links</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: max-content;
+        margin: auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .task-list {
+        list-style-type: none;
+        padding: 40px;
+      }
+
+      .task-list li {
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+      }
+
+      .task-list input[type='checkbox'] {
+        margin-right: 10px;
+      }
+
+      .task-list a {
+        text-decoration: none;
+        color: #007bff;
+      }
+
+      .task-list a:hover {
+        text-decoration: underline;
+      }
+
+      .container {
+        position: relative;
+      }
+      .headerContainer {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        gap: 30px;
+        align-items: center;
+
+        background-color: #e0e0e0;
+        border-radius: 8px;
+        padding: 10px 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .progressBarContainer {
+        position: sticky;
+        top: 0;
+        margin: 20px 0;
+        width: 100%;
+      }
+
+      .progress-container {
+        width: 100%;
+        background-color: #ffefef;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        height: 20px;
+        background-color: #4caf50; /* Loaded state color */
+        transition: width 0.3s ease;
+      }
+
+      .progressText {
+        text-align: center;
+        margin-top: 5px;
+      }
+
+      .accordion {
+        max-width: 600px;
+        margin: auto;
+      }
+
+      .accordion-item {
+        margin-bottom: 10px;
+      }
+
+      .accordion-header {
+        cursor: pointer;
+        padding: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .accordion-header:hover {
+        background-color: #eee;
+      }
+
+      .accordion-content {
+        max-height: 0; /* Hidden by default */
+        overflow: hidden; /* Hide overflow */
+        transition: max-height 0.3s ease; /* Smooth transition */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div style="position: sticky" class="headerContainer">
+        <h1 style="width: max-content; min-width: max-content">DP Problems</h1>
+      </div>
+
+      <ul class="task-list" id="task-list"></ul>
+    </div>
+    <script>
+      const problems = [
+        [
+          'Fibonacci Sequence',
+          [
+            {
+              text: 'LeetCode 70: Climbing Stairs',
+              link:
+                'https://leetcode.com/problems/climbing-stairs/description/',
+            },
+            {
+              text: 'LeetCode 509: Fibonacci Number',
+              link:
+                'https://leetcode.com/problems/fibonacci-number/description/',
+            },
+            {
+              text: 'LeetCode 746. Min Cost Climbing Stairs',
+              link:
+                'https://leetcode.com/problems/min-cost-climbing-stairs/description/',
+            },
+          ],
+        ],
+        [
+          "Kadane's Algorithm",
+          [
+            {
+              text: 'LeetCode 53: Maximum Subarray',
+              link:
+                'https://leetcode.com/problems/maximum-subarray/description/',
+            },
+            {
+              text: 'LeetCode 918: Maximum Sum Circular Subarray',
+              link:
+                'https://leetcode.com/problems/maximum-sum-circular-subarray/description/',
+            },
+            {
+              text: 'LeetCode 152: Maximum Product Subarray',
+              link:
+                'https://leetcode.com/problems/maximum-product-subarray/description/',
+            },
+          ],
+        ],
+        [
+          '0/1 Knapsack',
+          [
+            {
+              text: 'LeetCode 2585: Number of Ways to Earn Points',
+              link:
+                'https://leetcode.com/problems/number-of-ways-to-earn-points/description/',
+            },
+            {
+              text: 'LeetCode 416: Partition Equal Subset Sum',
+              link:
+                'https://leetcode.com/problems/partition-equal-subset-sum/description/',
+            },
+            {
+              text: 'LeetCode 494: Target Sum',
+              link: 'https://leetcode.com/problems/target-sum/description/',
+            },
+            {
+              text: 'LeetCode 1049. Last Stone Weight II',
+              link:
+                'https://leetcode.com/problems/last-stone-weight-ii/description/',
+            },
+          ],
+        ],
+        [
+          'Unbounded Knapsack',
+          [
+            {
+              text: 'LeetCode 322: Coin Change',
+              link: 'https://leetcode.com/problems/coin-change/description/',
+            },
+            {
+              text: 'LeetCode 518: Coin Change 2',
+              link: 'https://leetcode.com/problems/coin-change-ii/description/',
+            },
+            {
+              text: 'LeetCode 279. Perfect Squares',
+              link:
+                'https://leetcode.com/problems/perfect-squares/description/',
+            },
+          ],
+        ],
+        [
+          'Longest Common Subsequence (LCS)',
+          [
+            {
+              text: 'LeetCode 1143: Longest Common Subsequence',
+              link:
+                'https://leetcode.com/problems/longest-common-subsequence/description/',
+            },
+            {
+              text: 'LeetCode 583: Delete Operation for Two Strings',
+              link:
+                'https://leetcode.com/problems/delete-operation-for-two-strings/description/',
+            },
+            {
+              text: 'LeetCode 1092: Shortest Common Supersequence',
+              link:
+                'https://leetcode.com/problems/shortest-common-supersequence/description/',
+            },
+          ],
+        ],
+        [
+          'Longest Increasing Subsequence (LIS)',
+          [
+            {
+              text: 'LeetCode 300: Longest Increasing Subsequence',
+              link:
+                'https://leetcode.com/problems/longest-increasing-subsequence/description/',
+            },
+            {
+              text: 'LeetCode 673: Number of Longest Increasing Subsequence',
+              link:
+                'https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/',
+            },
+            {
+              text: 'leetCode 354: Russian Doll Envelopes',
+              link:
+                'https://leetcode.com/problems/russian-doll-envelopes/description/',
+            },
+          ],
+        ],
+        [
+          'Palindromic Subsequence',
+          [
+            {
+              text: 'LeetCode 516: Longest Palindromic Subsequence',
+              link:
+                'https://leetcode.com/problems/longest-palindromic-subsequence/description/',
+            },
+            {
+              text: 'LeetCode 647: Palindromic Substrings',
+              link:
+                'https://leetcode.com/problems/palindromic-substrings/description/',
+            },
+            {
+              text:
+                'LeetCode 1312: Minimum Insertion Steps to Make a String Palindrome',
+              link:
+                'https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/description/',
+            },
+          ],
+        ],
+        [
+          'Edit Distance',
+          [
+            {
+              text: 'LeetCode 72: Edit Distance',
+              link: 'https://leetcode.com/problems/edit-distance/description/',
+            },
+            {
+              text: 'LeetCode 583: Delete Operation for Two Strings',
+              link:
+                'https://leetcode.com/problems/delete-operation-for-two-strings/description/',
+            },
+            {
+              text: 'LeetCode 712: Minimum ASCII Delete Sum for Two Strings',
+              link:
+                'https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/description/',
+            },
+          ],
+        ],
+        [
+          'Subset Sum',
+          [
+            {
+              text: 'LeetCode 416: Partition Equal Subset Sum',
+              link:
+                'https://leetcode.com/problems/partition-equal-subset-sum/description/',
+            },
+            {
+              text: 'LeetCode 494: Target Sum',
+              link: 'https://leetcode.com/problems/target-sum/description/',
+            },
+            {
+              text: 'LeetCode 698: Partition to K Equal Sum Subsets',
+              link:
+                'https://leetcode.com/problems/partition-to-k-equal-sum-subsets/',
+            },
+          ],
+        ],
+        [
+          'String Partition',
+          [
+            {
+              text: 'LeetCode 139: Word Break',
+              link: 'https://leetcode.com/problems/word-break/description/',
+            },
+            {
+              text: 'LeetCode 132. Palindrome Partitioning II',
+              link:
+                'https://leetcode.com/problems/palindrome-partitioning-ii/description/',
+            },
+            {
+              text: 'LeetCode 472: Concatenated Words',
+              link:
+                'https://leetcode.com/problems/concatenated-words/description/',
+            },
+          ],
+        ],
+        [
+          'Catalan Numbers',
+          [
+            {
+              text: 'LeetCode 96: Unique Binary Search Trees',
+              link:
+                'https://leetcode.com/problems/unique-binary-search-trees/description/',
+            },
+            {
+              text: 'LeetCode 22: Generate Parentheses',
+              link:
+                'https://leetcode.com/problems/generate-parentheses/description/',
+            },
+          ],
+        ],
+        [
+          'Matrix Chain Multiplication',
+          [
+            {
+              text: 'LeetCode 1039: Minimum Score Triangulation of Polygon',
+              link:
+                'https://leetcode.com/problems/minimum-score-triangulation-of-polygon/description/',
+            },
+            {
+              text: 'LeetCode 312: Burst Balloons',
+              link: 'https://leetcode.com/problems/burst-balloons/description/',
+            },
+            {
+              text: 'LeetCode 1000: Minimum Cost to Merge Stones',
+              link:
+                'https://leetcode.com/problems/minimum-cost-to-merge-stones/description/',
+            },
+          ],
+        ],
+        [
+          'Count Distinct Ways',
+          [
+            {
+              text: 'LeetCode 91: Decode Ways',
+              link: 'https://leetcode.com/problems/decode-ways/description/',
+            },
+            {
+              text: 'LeetCode 2266. Count Number of Texts',
+              link:
+                'https://leetcode.com/problems/count-number-of-texts/description/',
+            },
+          ],
+        ],
+        [
+          'DP on Grids',
+          [
+            {
+              text: 'LeetCode 62: Unique Paths',
+              link: 'https://leetcode.com/problems/unique-paths/description/',
+            },
+            {
+              text: 'LeetCode 64: Minimum Path Sum',
+              link:
+                'https://leetcode.com/problems/minimum-path-sum/description/',
+            },
+            {
+              text: 'LeetCode 329. Longest Increasing Path in a Matrix',
+              link:
+                'https://leetcode.com/problems/longest-increasing-path-in-a-matrix/description/',
+            },
+          ],
+        ],
+        [
+          'DP on Trees',
+          [
+            {
+              text: 'LeetCode 337: House Robber III',
+              link:
+                'https://leetcode.com/problems/house-robber-iii/description/',
+            },
+            {
+              text: 'LeetCode 124: Binary Tree Maximum Path Sum',
+              link:
+                'https://leetcode.com/problems/binary-tree-maximum-path-sum/description/',
+            },
+            {
+              text: 'LeetCode 968: Binary Tree Cameras',
+              link:
+                'https://leetcode.com/problems/binary-tree-cameras/description/',
+            },
+          ],
+        ],
+        [
+          'DP on Graphs',
+          [
+            {
+              text: 'LeetCode 787: Cheapest Flights Within K Stops',
+              link:
+                'https://leetcode.com/problems/cheapest-flights-within-k-stops/description/',
+            },
+            {
+              text:
+                'LeetCode 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance',
+              link:
+                'https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/description/',
+            },
+          ],
+        ],
+        [
+          'Digit DP',
+          [
+            {
+              text: 'LeetCode 357: Count Numbers with Unique Digits',
+              link:
+                'https://leetcode.com/problems/count-numbers-with-unique-digits/description/',
+            },
+            {
+              text: 'LeetCode 233: Number of Digit One',
+              link:
+                'https://leetcode.com/problems/number-of-digit-one/description/',
+            },
+            {
+              text: 'LeetCode 902. Numbers At Most N Given Digit Set',
+              link:
+                'https://leetcode.com/problems/numbers-at-most-n-given-digit-set/description/',
+            },
+          ],
+        ],
+        [
+          'Bitmasking DP',
+          [
+            {
+              text:
+                'LeetCode 1986: Minimum Number of Work Sessions to Finish the Tasks',
+              link:
+                'https://leetcode.com/problems/minimum-number-of-work-sessions-to-finish-the-tasks/description/',
+            },
+            {
+              text: 'LeetCode 2305. Fair Distribution of Cookies',
+              link:
+                'https://leetcode.com/problems/fair-distribution-of-cookies/description/',
+            },
+            {
+              text: 'LeetCode 847: Shortest Path Visiting All Nodes',
+              link:
+                'https://leetcode.com/problems/shortest-path-visiting-all-nodes/description/',
+            },
+          ],
+        ],
+        [
+          'Probability DP',
+          [
+            {
+              text: 'LeetCode 688: Knight Probability in Chessboard',
+              link:
+                'https://leetcode.com/problems/knight-probability-in-chessboard/description/',
+            },
+            {
+              text: 'LeetCode 808: Soup Servings',
+              link: 'https://leetcode.com/problems/soup-servings/description/',
+            },
+            {
+              text: 'LeetCode 837. New 21 Game',
+              link: 'https://leetcode.com/problems/new-21-game/description/',
+            },
+          ],
+        ],
+        [
+          'State Machine DP',
+          [
+            {
+              text:
+                'LeetCode 309: Best Time to Buy and Sell Stock with Cooldown',
+              link:
+                'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/',
+            },
+            {
+              text: 'LeetCode 123: Best Time to Buy and Sell Stock III',
+              link:
+                'https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/',
+            },
+          ],
+        ],
+      ];
+
+      const existingMap =
+        JSON.parse(localStorage.getItem('activeAccordion')) || {};
+      for (const [header] of problems.map((i) => i[0])) {
+        if (existingMap[header] == undefined) existingMap[header] = true;
+      }
+      localStorage.setItem('activeAccordion', JSON.stringify(existingMap));
+
+      const taskListContainer = document.getElementById('task-list');
+
+      const clickAction = (section, content) =>
+        function () {
+          const currentMap = JSON.parse(
+            localStorage.getItem('activeAccordion')
+          );
+          currentMap[section.ariaLabel] = !currentMap[section.ariaLabel];
+          localStorage.setItem('activeAccordion', JSON.stringify(currentMap));
+
+          // Hide all other contents
+          if (!currentMap[section.ariaLabel]) {
+            content.style.maxHeight = null; // Collapse
+          } else {
+            content.style.maxHeight = content.scrollHeight + 'px'; // Expand
+          }
+        };
+
+      problems.forEach((topicWithProblemArray, idx) => {
+        const [topic, topicWiseProblems] = topicWithProblemArray;
+
+        const section = document.createElement('section');
+        section.classList.add('accordion-item');
+        section.ariaLabel = topic;
+
+        const header = document.createElement('h2');
+        header.classList.add('accordion-header');
+        header.textContent = `${idx + 1}. ${topic}`;
+
+        const liContainer = document.createElement('div');
+        liContainer.classList.add('accordion-content');
+
+        // GenAI code
+        topicWiseProblems.forEach((link, index) => {
+          const li = document.createElement('li');
+          const input = document.createElement('input');
+          input.type = 'checkbox';
+          input.id = `${topic}-${index + 1}`;
+          input.ariaLabel = link.link.split('/')[4];
+          const label = document.createElement('label');
+          label.htmlFor = `${topic}-${index + 1}`;
+          const a = document.createElement('a');
+          a.href = link.link;
+          a.target = '_blank';
+          a.textContent = link.text;
+          label.appendChild(a);
+          li.appendChild(input);
+          li.appendChild(label);
+          liContainer.appendChild(li);
+        });
+
+        header.addEventListener('click', clickAction(section, liContainer));
+
+        section.appendChild(header);
+        section.appendChild(liContainer);
+        taskListContainer.appendChild(section);
+
+        if (existingMap[topic]) {
+          liContainer.style.maxHeight = liContainer.scrollHeight + 'px';
+        }
+      });
+
+      // GenAI code
+      // Save checkbox status to localStorage
+      document
+        .querySelectorAll('.task-list input[type="checkbox"]')
+        .forEach((checkbox, index) => {
+          const ariaLabel = checkbox.ariaLabel;
+          checkbox.checked =
+            localStorage.getItem(`task${ariaLabel}`) === 'true';
+          checkbox.addEventListener('change', () => {
+            const allSibilingsChecked =
+              [...checkbox.parentElement.parentElement.children]
+                .map((i) => i.firstChild)
+                .filter((i) => !i.checked).length === 0;
+            console.log(allSibilingsChecked);
+
+            localStorage.setItem(`task${ariaLabel}`, checkbox.checked);
+          });
+        });
+
+      // GenAI code
+      // Create progress bar
+      const progressBarContainer = document.createElement('div');
+      progressBarContainer.classList.add('progressBarContainer');
+
+      const progressBarBackground = document.createElement('div');
+      progressBarBackground.classList.add('progress-container');
+
+      const progressBar = document.createElement('div');
+      progressBar.classList.add('progress-bar');
+
+      progressBarBackground.appendChild(progressBar);
+
+      const progressText = document.createElement('div');
+      progressText.classList.add('progressText');
+
+      progressBarContainer.appendChild(progressBarBackground);
+      progressBarContainer.appendChild(progressText);
+      document.querySelector('.headerContainer').append(progressBarContainer);
+
+      // Update progress bar
+      const updateProgressBar = () => {
+        const totalTasks = problems.reduce((acc, i) => acc + i[1].length, 0);
+        const completedTasks = document.querySelectorAll(
+          '.task-list input[type="checkbox"]:checked'
+        ).length;
+        const progress = (completedTasks / totalTasks) * 100;
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `${completedTasks} / ${totalTasks} (${progress.toFixed(
+          2
+        )}%)`;
+      };
+
+      // Initial progress bar update
+      updateProgressBar();
+
+      // Update progress bar on checkbox change
+      document
+        .querySelectorAll('.task-list input[type="checkbox"]')
+        .forEach((checkbox) => {
+          checkbox.addEventListener('change', updateProgressBar);
+        });
+    </script>
+  </body>
+</html>
